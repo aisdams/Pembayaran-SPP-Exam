@@ -71,9 +71,9 @@
                             <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>SPP</span></a>
                                 <ul class="collapse">
-                                    <li><a href="barchart.html">Data SPP</a></li>
-                                    <li><a href="linechart.html">Transaksi Pembayaran</a></li>
-                                    <li><a href="piechart.html">History Pembayaran</a></li>
+                                    <li><a href="/data-spp">Data SPP</a></li>
+                                    <li><a href="/data-pembayaran">Transaksi Pembayaran</a></li>
+                                    <li><a href="/history-pembayaran">History Pembayaran</a></li>
                                     <li><a href="piechart.html">Laporan</a></li>
                                 </ul>
                             </li>
@@ -268,7 +268,7 @@
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
                             <img class="avatar user-thumb" src="{{ asset('template/assets/images/author/avatar.png')}}" alt="avatar">
-                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Kumkum Rai <i class="fa fa-angle-down"></i></h4>
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">{{Auth::user()->username}} <i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Message</a>
                                 <a class="dropdown-item" href="#">Settings</a>

@@ -1,13 +1,13 @@
 @extends('admin.layout')
-@section('judul', 'Data Petugas')
+@section('judul', 'Data Siswa')
 @section('content')
     
 <div class="col-lg-12 grid-margin stretch-card mt-5">
     <div class="card">
       <div class="card-body">
         <div class="d-flex justify-content-between">
-          <h2>Tabel Data Kelas</h2>
-          <a href="{{ url('data-kelas/create') }}" style="text-decoration: none" class="tbl-btn button btn-primary p-2 rounded-2">Add New Kelas</a>
+          <h2>Tabel Data Siswa</h2>
+          <a href="{{ url('data-siswa/create') }}" style="text-decoration: none" class="tbl-btn button btn-primary p-2 rounded-2">Add New Siswa</a>
         </div>
         <hr class="border-dark my-4">
         <div class="table-responsive">
@@ -15,8 +15,13 @@
             <thead>
               <tr>
                 <th class="fw-bold text-center">No</th>
-                <th class="fw-bold text-center">Nama Kelas</th>
-                <th class="fw-bold text-center">kompetensi_keahlian</th>
+                <th class="fw-bold text-center">NISN</th>
+                <th class="fw-bold text-center">NIS</th>
+                <th class="fw-bold text-center">Nama</th>
+                <th class="fw-bold text-center">Kelas</th>
+                <th class="fw-bold text-center">Kompetensi Keahlian</th>
+                <th class="fw-bold text-center">Tahun Ajaran</th>
+                <th class="fw-bold text-center">Nominal</th>
                 <th class="fw-bold text-center">Action</th>
               </tr>
             </thead>
@@ -24,31 +29,44 @@
               @php
               $no = 1;
             @endphp
-            @foreach ($kelas as $idx)
+            @foreach ($siswa as $idx)
               <tr>
                 <td class="fw-semibold text-center fs-6">{{$no++}}</td>
-                <td class="text-center fs-6">{{$idx->nama_kelas}}</td>
-                <td class="text-center fs-6">{{$idx->kompetensi_keahlian}}</td>
+                <td class="text-center fs-6">{{$idx->nisn}}</td>
+                <td class="text-center fs-6">{{$idx->nis}}</td>
+                <td class="text-center fs-6">{{$idx->nama}}</td>
+                <td class="text-center fs-6">{{$idx->kelas->nama_kelas}}</td>
+                <td class="text-center fs-6">{{$idx->kelas->kompetensi_keahlian}}</td>
+                <td class="text-center fs-6">{{$idx->spps->tahun}}</td>
+                <td class="text-center fs-6">Rp. {{number_format($idx->spps->nominal)}}</td>
                 {{-- <td class="text-danger">{{$idx ->}}<i class="mdi mdi-arrow-down"></i></td> --}}
                 <td class=" d-flex gap-2 justify-content-center text-center">
                   <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editKelasModal"><i class="fa-solid fa-pen pr-1"></i>
                     Edit
                   </button>
                   <!-- Modal -->
-                    <div class="modal fade" id="editKelasModal" tabindex="-1" aria-labelledby="editKelasModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="editKelasModal" tabindex="-1" aria-labelledby="editsiswaModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="editKelasModalLabel">Edit Kelas</h5>
+                            <h5 class="modal-title" id="editsiswaModalLabel">Edit Data Siswa</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
-                          <form method="POST" action="{{ url('data-kelas/'.$idx->id) }}">
+                          <form method="POST" action="{{ url('data-siswa/'.$idx->id) }}">
                             @csrf
                             @method('PUT')
                             <div class="modal-body">
                               <div class="mb-3">
-                                <label for="nama_kelas" class="form-label">Nama Kelas</label>
-                                <input type="text" class="form-control" id="nama_kelas" name="nama_kelas" value="{{ $idx->nama_kelas }}">
+                                <label for="nisn" class="form-label">NISN</label>
+                                <input type="number" class="form-control" id="nisn" name="nisn" value="{{ $idx->nisn }}">
+                              </div>
+                              <div class="mb-3">
+                                <label for="nis" class="form-label">NIS</label>
+                                <input type="number" class="form-control" id="nis" name="nis" value="{{ $idx->nis }}">
+                              </div>
+                              <div class="mb-3">
+                                <label for="nama" class="form-label">nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" value="{{ $idx->nama }}">
                               </div>
                               <div class="mb-3">
                                 <label for="Kompetensi Keahlian" class="form-label">Kompetensi Keahlian</label>
@@ -63,10 +81,10 @@
                         </div>
                       </div>
                     </div>
-                  <form action="{{ url('data-kelas',$idx->id) }}" method="POST">
+                  <form action="{{ url('data-siswa',$idx->id) }}" method="POST">
                     @csrf
                     @method('delete')
-                    <button type="submit" class="btn btn-sm fw-semibold text-white rounded-2 bg-danger delete ml-2" data-name="{{ $idx->nama_kelas }}"><i class="fa-solid fa-trash mr-1" style="font-size: 13px"></i>Delete</button>
+                    <button type="submit" class="btn btn-sm fw-semibold text-white rounded-2 bg-danger delete ml-2" data-name="{{ $idx->nisn }}"><i class="fa-solid fa-trash mr-1" style="font-size: 13px"></i>Delete</button>
                       </form>
                   </form>
                 </td>

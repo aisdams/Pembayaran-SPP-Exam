@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Models\User;
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 
 class DataPetugasController extends Controller
@@ -13,7 +15,7 @@ class DataPetugasController extends Controller
     public function index()
     {
         $petugas = User::where('level', 'petugas')->get();
-        return view('data-petugas.index', compact('petugas'));
+        return view('admin.data-petugas.index', compact('petugas'));
     }
 
     /**
@@ -22,7 +24,7 @@ class DataPetugasController extends Controller
     public function create()
     {
         $petugas = User::all();
-        return view('data-petugas.index', compact('petugas'));
+        return view('admin.data-petugas.add', compact('petugas'));
     }
 
     /**
@@ -30,7 +32,32 @@ class DataPetugasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nama_petugas'=>'required|string',
+            'username'=>'required|string',
+            'level'=>'required',
+            'password' => 'required|string|min:6'
+        ]);
+
+        $petugas_nama = $request->nama_petugas;
+        $username = $request->username;
+        $level = $request->level;
+        $password = bcrypt($request->password);
+
+        $id_petugas = Helper::IDGenerator(new User, 'id_petugas', 2, 'STD'); /** Generate id */
+        
+        $q = new User;
+        $q->id_petugas = $id_petugas;
+        $q->nama_petugas = $petugas_nama;
+        $q->username = $username;
+        $q->level = $level;
+        $q->password = $password;
+        $save =  $q->save();
+
+        if($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput()->with('msg', 'Something Wrong');
+        }
+        return redirect("data-petugas")->with('success', 'Data petugas berhasil di tambahkan');
     }
 
     /**
@@ -46,7 +73,7 @@ class DataPetugasController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -54,7 +81,9 @@ class DataPetugasController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $petugas = User::find($id);
+        $petugas->update($request->all());
+        return redirect("/data-petugas")->with('success','Data Petugas berhasil diupdate.');
     }
 
     /**
@@ -62,6 +91,8 @@ class DataPetugasController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $delete = User::findorfail($id);
+        $delete->delete();
+        return back()->with('destroy', "Data Petugas Berhasil Di Delete");
     }
 }

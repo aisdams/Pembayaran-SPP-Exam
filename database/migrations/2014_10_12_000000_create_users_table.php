@@ -15,11 +15,11 @@ return new class extends Migration
             Schema::create('users', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->unsignedBigInteger('kelas_id')->nullable();
-                $table->unsignedBigInteger('spp_id')->nullable();
+                $table->unsignedBigInteger('spps_id')->nullable();
                 $table->string('id_petugas')->nullable();
                 $table->string('nisn')->nullable();
                 $table->string('nis')->nullable();
-                $table->string('username');
+                $table->string('username')->nullable();
                 $table->string('nama')->nullable();
                 $table->string('nama_petugas')->nullable();
                 $table->enum('level', ['admin', 'petugas', 'siswa']);
@@ -30,7 +30,7 @@ return new class extends Migration
                 $table->timestamps();
 
                 $table->foreign('kelas_id')->references('id')->on('kelas');
-                $table->foreign('spp_id')->references('id')->on('spps');
+                $table->foreign('spps_id')->references('id')->on('spps');
             });
         }
     }

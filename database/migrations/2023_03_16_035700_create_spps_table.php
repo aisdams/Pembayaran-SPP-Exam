@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('spps', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->datetime('tahun');
+            $table->integer('tahun');
             $table->integer('nominal');
             $table->timestamps();
         });

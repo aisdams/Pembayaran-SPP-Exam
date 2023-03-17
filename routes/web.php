@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\PetugasController;
+use App\Http\Controllers\DataSiswaController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\DataPetugasController;
 
 /*
@@ -23,6 +25,8 @@ use App\Http\Controllers\DataPetugasController;
 Route::get('/', function () {
     return view('global.index');
 })->middleware('auth');
+
+Route::get('history-pembayaran', [PembayaranController::class, 'history'])->name('history-pembayaran');
 
 Route::get('/admin', function () {
     return view('admin.dashboard');
@@ -52,9 +56,17 @@ Route::resource('data-petugas', DataPetugasController::class)->middleware('auth'
 Route::resource('data-kelas', KelasController::class)->middleware('auth');
 // End Data Kelas
 
+// Data Siswa
+Route::resource('data-siswa', DataSiswaController::class)->middleware('auth');
+// End Data Siswa
+
 // Data SPP
 Route::resource('data-spp', SppController::class)->middleware('auth');
 // End Data SPP
+
+// Data Pembayaran
+Route::resource('data-pembayaran', PembayaranController::class)->middleware('auth');
+// End Data Pembayaran
 
 // check Role User
 Route::group(['middleware' => ['auth']], function () {

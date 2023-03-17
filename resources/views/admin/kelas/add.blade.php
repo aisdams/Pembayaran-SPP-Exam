@@ -21,7 +21,7 @@
             @error('kompetensi_keahlian')<div class="invalid-feedback">{{$message}}</div>@enderror
         </div>
         <button type="submit" class="btn btn-success fw-semibold mr-2">Submit</button>
-        <a href="{{url ('/data-outlet')}}" class="btn btn-light">Cancel</a>
+        <a href="{{url ('/data-spp')}}" class="btn btn-light">Cancel</a>
       </form>
     </div>
   </div>

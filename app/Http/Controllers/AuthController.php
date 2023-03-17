@@ -43,7 +43,7 @@ class AuthController extends Controller
                 return redirect()->intended('siswa')
                     ->withSuccess('You have Successfully loggedin');
             } else {
-                return redirect()->withErrors('You have Error loggedin');
+                return redirect('auth/login')->withErrors('You have Error loggedin');
             }
         }
     }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
+use App\Models\Spps;
 use Illuminate\Http\Request;
 
 class SppController extends Controller
@@ -11,8 +13,8 @@ class SppController extends Controller
      */
     public function index()
     {
-        $kelas = Kelas::paginate(10);
-        return view('kelas.index', compact('kelas'));
+        $spp = Spps::paginate(10);
+        return view('admin.spp.data-spp.index', compact('spp'));
     }
 
     /**
@@ -20,7 +22,7 @@ class SppController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.spp.data-spp.add');
     }
 
     /**
@@ -28,7 +30,16 @@ class SppController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'tahun' => 'required',
+            'nominal' => 'required|integer|min:1',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        Spps::create($request->all());
+        return redirect("/data-spp")->with('success','Data SPP berhasil ditambahkan.');
     }
 
     /**
@@ -44,7 +55,7 @@ class SppController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // 
     }
 
     /**
@@ -52,7 +63,23 @@ class SppController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'tahun' => 'required',
+            'nominal' => 'required|integer|min:1',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+    
+        $spp = Spps::findOrFail($id);
+        $spp->tahun = $request->input('tahun');
+        $spp->nominal = $request->input('nominal');
+        $spp->save();
+    
+        return redirect('data-spp') ->withSuccess('Data SPP berhasil diupdate.');
     }
 
     /**
@@ -60,6 +87,8 @@ class SppController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $delete = Spps::findorfail($id);
+        $delete->delete();
+        return back()->with('destroy', "Data SPP Berhasil Dihapus");
     }
 }

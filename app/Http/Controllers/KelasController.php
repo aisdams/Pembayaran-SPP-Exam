@@ -14,7 +14,7 @@ class KelasController extends Controller
     public function index()
     {
         $kelas = Kelas::paginate(10);
-        return view('kelas.index', compact('kelas'));
+        return view('admin.kelas.index', compact('kelas'));
     }
 
     /**
@@ -22,7 +22,7 @@ class KelasController extends Controller
      */
     public function create()
     {
-        return view('kelas.add');
+        return view('admin.kelas.add');
     }
 
     /**
@@ -30,6 +30,14 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'nama_kelas' => 'required|string|max:255',
+            'kompetensi_keahlian' => 'required|string|min:1',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         Kelas::create($request->all());
         return redirect("/data-kelas")->with('success','Data Kelas berhasil ditambahkan.');
     }
@@ -47,8 +55,6 @@ class KelasController extends Controller
      */
     public function edit(string $id)
     {
-        $kelas = Kelas::find($id);
-        return view('kelas.edit', compact('kelas'));
     }
 
     /**
