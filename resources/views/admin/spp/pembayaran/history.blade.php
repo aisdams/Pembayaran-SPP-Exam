@@ -1,4 +1,5 @@
 @extends('admin.layout')
+@section('judul','History Pembayaran')
 @section('content')
 <div class="container mt-5">
     <div class="row">
@@ -10,25 +11,25 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Nama Siswa</th>
-                                <th>Nominal</th>
-                                <th>Bulan Bayar</th>
-                                <th>Tanggal Bayar</th>
-                                <th>Jumlah Bayar</th>
-                                <th>Status</th>
+                                <th class="fw-bold text-center">#</th>
+                                <th class="fw-bold text-center">Nama Siswa</th>
+                                <th class="fw-bold text-center">Nominal</th>
+                                <th class="fw-bold text-center">Bulan Bayar</th>
+                                <th class="fw-bold text-center">Tanggal Bayar</th>
+                                <th class="fw-bold text-center">Jumlah Bayar</th>
+                                <th class="fw-bold text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($pembayaran as $idx)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $idx->user->nama }}</td>
-                                    <td>{{ $idx->spps->nominal }}</td>
-                                    <td>{{ $idx->bulan_bayar }}</td>
-                                    <td>{{ date('d-F-Y', strtotime($idx->tgl_bayar)) }}</td>
-                                    <td>RP. {{ number_format($idx->jumlah_bayar) }}</td>
-                                    <td>{{ $idx->status }}</td>
+                                    <td class="fw-semibold text-center fs-6">{{ $loop->iteration }}</td>
+                                    <td class="text-center fs-6">{{ $idx->user->nama }}</td>
+                                    <td class="text-center fs-6">{{ $idx->spps->nominal }}</td>
+                                    <td class="text-center fs-6">{{ $idx->bulan_bayar }}</td>
+                                    <td class="text-center fs-6">{{ date('d-F-Y', strtotime($idx->tgl_bayar)) }}</td>
+                                    <td class="text-center fs-6">RP. {{ number_format($idx->jumlah_bayar) }}</td>
+                                    <td class="text-center fs-6">{{ $idx->status }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -11,7 +11,7 @@
         </div>
         <hr class="border-dark my-4">
         <div class="table-responsive">
-          <table class="table table-hover table-striped border rounded-1">
+          <table class="table table-hover table-striped border rounded-1" id="siswa">
             <thead>
               <tr>
                 <th class="fw-bold text-center">No</th>
@@ -108,6 +108,29 @@
   <script type="text/javascript">
     $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
   </script>
+  
+<script>
+  $(function () {
+      $('#siswa').DataTable().fnDestroy({
+          columnDefs: [{
+              paging: true,
+              scrollX: true,
+              lengthChange: true,
+              searching: true,
+              ordering: true,
+              targets: [1, 2, 3, 4],
+          }, ],
+      });
+      $('button').click(function () {
+          var data = table.$('input, select', 'button', 'form').serialize();
+          return false;
+      });
+      table.columns().iterator('column', function (ctx, idx) {
+          $(table.column(idx).header()).prepend('<span class="sort-icon"/>');
+      });
+  });
+</script>
+
   <script>        
     $('.delete').click(function(event) {
     var form =  $(this).closest("form");

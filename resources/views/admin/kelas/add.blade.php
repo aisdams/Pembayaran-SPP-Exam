@@ -1,5 +1,5 @@
 @extends('admin.layout')
-
+@section('judul','Add New Data Kelas')
 @section('content')
 <div class="col-md-12 grid-margin stretch-card mt-5">
   <div class="card">

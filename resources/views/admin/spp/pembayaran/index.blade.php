@@ -37,6 +37,7 @@
                 <td class="text-center fs-6">{{ $idx->status }}</td>
                 {{-- <td class="text-danger">{{$idx ->}}<i class="mdi mdi-arrow-down"></i></td> --}}
                 <td class=" d-flex gap-2 justify-content-center text-center">
+                  <a class="btn btn-danger btn-sm" href="{{ route('cetak-laporan-pdf', $idx->id) }}" style="font-size: 14px"><i class="mr-2 fa-solid fa-file-pdf" ></i>PDF</a>
                   <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editKelasModal"><i class="fa-solid fa-pen pr-1"></i>
                     Edit
                   </button>

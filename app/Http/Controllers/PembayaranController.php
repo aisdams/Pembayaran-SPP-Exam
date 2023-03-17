@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use Validator;
 use Carbon\Carbon;
 use App\Models\Spps;
@@ -23,6 +24,40 @@ class PembayaranController extends Controller
         $spps = Spps::all();
         $pembayaran = Pembayaran::with('user','spps')->get();
         return view('admin.spp.pembayaran.index', compact('siswa','spps','pembayaran'));
+    }
+
+    public function cetakLaporanPDF($id)
+    {
+        $siswa = DB::table('users')
+            ->where('level', 'siswa')
+            ->get();
+        $spps = Spps::all();
+        $pembayaran = Pembayaran::with('user','spps')->find($id);
+
+        $pdf = PDF::loadView('pembayaran', compact('siswa','spps','pembayaran'));
+        return $pdf->download('pembayaran' . $pembayaran->id . '.pdf');
+    }
+
+    // Laporan 
+    public function LaporanSemua (){
+        $siswa = DB::table('users')
+            ->where('level', 'siswa')
+            ->get();
+        $spps = Spps::all();
+        $pembayaran = Pembayaran::with('user','spps')->get();
+        return view('admin.laporan.all-laporan', compact('siswa','spps','pembayaran'));
+    }
+
+    public function laporan(Request $request)
+    {
+        $tanggal = $request->input('tgl_bayar');
+        $laporan = DB::table('pembayarans')
+                ->whereDate('tgl_bayar', $tanggal)
+                ->join('users', 'pembayarans.user_id', '=', 'users.id')
+                ->join('spps', 'pembayarans.spps_id', '=', 'spps.id')
+                ->select('pembayarans.*', 'users.nama', 'spps.tahun','spps.nominal')
+                ->get();
+        return view('admin.laporan.tanggal', ['laporan' => $laporan]);
     }
 
     public function history() {

@@ -40,6 +40,18 @@ Route::get('/siswa', function () {
     return view('siswa.index');
 })->middleware('auth');
 
+// Laporan Pembayaran
+Route::get('/laporan/all-data-laporan',[PembayaranController::class,'LaporanSemua'])->middleware('auth');
+Route::get('/tampilan-laporan', function () {
+    return view('admin.laporan.main');
+})->middleware('auth');
+Route::get('/laporan-tanggal', [PembayaranController::class, 'laporan'])->name('laporan')->middleware('auth');
+// End Laporan Pembayaran
+
+// =================== Export PDF =================== //
+Route::get('/pembayaran-pdf/{id}', [PembayaranController::class, 'cetakLaporanPDF'])->name('cetak-laporan-pdf');
+
+
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::group(['prefix'=>'auth'], function ($router) {
     Route::get('/register', [AuthController::class, 'viewregister']);

@@ -1,4 +1,5 @@
 @extends('admin.layout')
+@section('judul','Add New Pembayaran')
 @section('content')
 @push('style')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">

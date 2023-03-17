@@ -1,7 +1,32 @@
 @extends('admin.layout')
 @section('judul', 'Data Kelas')
 @section('content')
-    
+@push('style')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<style>
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc_disabled:before {
+      right: 1em;
+      content: "\2191" !important;
+      font-size: 18px !important;
+      margin-bottom: .3rem !important;
+    }
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:after {
+      right: 0.5em;
+      content: "\2193" !important;
+      font-size: 18px !important;
+      margin-bottom: .3rem !important;
+    }
+</style>
+@endpush
+
 <div class="col-lg-12 grid-margin stretch-card mt-5">
     <div class="card">
       <div class="card-body">
@@ -11,7 +36,7 @@
         </div>
         <hr class="border-dark my-4">
         <div class="table-responsive">
-          <table class="table table-hover table-striped border rounded-1">
+          <table class="table table-hover dataTable  table-striped border rounded-1" id="kelas">
             <thead>
               <tr>
                 <th class="fw-bold text-center">No</th>
@@ -90,6 +115,31 @@
   <script type="text/javascript">
     $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
   </script>
+
+<script>
+  $(function () {
+      $('#kelas').DataTable().fnDestroy({
+          columnDefs: [{
+              paging: true,
+              scrollX: true,
+              processing: true,
+              serverSide: true,
+              lengthChange: true,
+              searching: true,
+              ordering: true,
+              targets: [1, 2, 3, 4],
+          }, ],
+      });
+      $('button').click(function () {
+          var data = table.$('input, select', 'button', 'form').serialize();
+          return false;
+      });
+      table.columns().iterator('column', function (ctx, idx) {
+          $(table.column(idx).header()).prepend('<span class="sort-icon"/>');
+      });
+  });
+</script>
+
   <script>        
     $('.delete').click(function(event) {
     var form =  $(this).closest("form");
