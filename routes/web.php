@@ -24,11 +24,15 @@ use App\Http\Controllers\DataPetugasController;
 
 Route::get('/', function () {
     return view('global.index');
-})->middleware('auth');
+});
 
 Route::get('history-pembayaran', [PembayaranController::class, 'history'])->name('history-pembayaran');
 
 Route::get('/admin', function () {
+    return view('admin.dashboard');
+})->middleware('auth');
+
+Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware('auth');
 
@@ -46,6 +50,8 @@ Route::get('/tampilan-laporan', function () {
     return view('admin.laporan.main');
 })->middleware('auth');
 Route::get('/laporan-tanggal', [PembayaranController::class, 'laporan'])->name('laporan')->middleware('auth');
+
+Route::get('/history-siswa', [PembayaranController::class, 'getHistoryPembayaranSiswa'])->name('history.siswa')->middleware('auth');
 // End Laporan Pembayaran
 
 // =================== Export PDF =================== //

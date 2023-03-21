@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PembayaranController extends Controller
 {
@@ -120,6 +121,14 @@ class PembayaranController extends Controller
         ]);
 
         return redirect('/data-pembayaran')->with('success', 'Pembayaran berhasil ditambahkan.');
+    }
+
+    public function getHistoryPembayaranSiswa()
+    {
+        $siswa = Auth::user();
+        $spps = Spps::all();
+        $historyPembayaran = Pembayaran::where('user_id', $siswa->id)->get();
+        return view('siswa.history', compact('historyPembayaran', 'spps','siswa'));
     }
 
     /**

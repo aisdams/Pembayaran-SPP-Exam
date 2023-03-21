@@ -18,6 +18,7 @@
                 <th class="fw-bold text-center">NISN</th>
                 <th class="fw-bold text-center">NIS</th>
                 <th class="fw-bold text-center">Nama</th>
+                <th class="fw-bold text-center">Username</th>
                 <th class="fw-bold text-center">Kelas</th>
                 <th class="fw-bold text-center">Kompetensi Keahlian</th>
                 <th class="fw-bold text-center">Tahun Ajaran</th>
@@ -35,6 +36,7 @@
                 <td class="text-center fs-6">{{$idx->nisn}}</td>
                 <td class="text-center fs-6">{{$idx->nis}}</td>
                 <td class="text-center fs-6">{{$idx->nama}}</td>
+                <td class="text-center fs-6">{{$idx->username}}</td>
                 <td class="text-center fs-6">{{$idx->kelas->nama_kelas}}</td>
                 <td class="text-center fs-6">{{$idx->kelas->kompetensi_keahlian}}</td>
                 <td class="text-center fs-6">{{$idx->spps->tahun}}</td>
@@ -67,10 +69,6 @@
                               <div class="mb-3">
                                 <label for="nama" class="form-label">nama</label>
                                 <input type="text" class="form-control" id="nama" name="nama" value="{{ $idx->nama }}">
-                              </div>
-                              <div class="mb-3">
-                                <label for="Kompetensi Keahlian" class="form-label">Kompetensi Keahlian</label>
-                                <input type="text" class="form-control" id="kompetensi_keahlian" name="kompetensi_keahlian" value="{{ $idx->kompetensi_keahlian }}">
                               </div>
                             </div>
                             <div class="modal-footer">

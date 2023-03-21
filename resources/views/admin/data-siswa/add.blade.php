@@ -16,6 +16,11 @@
           @error('nisn')<div class="invalid-feedback">{{$message}}</div>@enderror
         </div>
         <div class="form-group">
+          <h6 class="mb-3">Username <span class="text-danger">*</span></h6>
+          <input type="text" class="form-control @error('username') is-invalid @enderror" id="exampleInputUsername1" placeholder="Masukkan username..." name="username">
+          @error('username')<div class="invalid-feedback">{{$message}}</div>@enderror
+      </div>
+        <div class="form-group">
             <h6 class="mb-3">Nis <span class="text-danger">*</span></h6>
             <input type="text" class="form-control @error('nis') is-invalid @enderror" id="exampleInputUsername1" placeholder="Masukkan Nis..." name="nis">
             @error('nis')<div class="invalid-feedback">{{$message}}</div>@enderror

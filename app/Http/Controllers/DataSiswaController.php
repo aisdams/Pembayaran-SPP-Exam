@@ -42,6 +42,7 @@ class DataSiswaController extends Controller
         $validator = Validator::make($request->all(), [
             'nisn' => ['required', 'string', 'max:255', Rule::unique('users')],
             'nis' => ['required', 'string', 'max:255', Rule::unique('users')],
+            'username' => ['required', 'string', 'max:255'],
             'nama' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
             'kelas_id' => ['required', 'exists:kelas,id'],
@@ -54,6 +55,7 @@ class DataSiswaController extends Controller
         $siswa = new User();
         $siswa->nisn = $request->nisn;
         $siswa->nis = $request->nis;
+        $siswa->username = $request->username;
         $siswa->nama = $request->nama;
         $siswa->password = bcrypt($request->password);
         $siswa->level = 'siswa';
@@ -89,10 +91,8 @@ class DataSiswaController extends Controller
         $validator = Validator::make($request->all(), [
             'nisn' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($id)],
             'nis' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($id)],
+            'usernama' => ['required', 'string', 'max:255'],
             'nama' => ['required', 'string', 'max:255'],
-            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
-            'kelas_id' => ['required', 'exists:kelas,id'],
-            'spps_id' => ['required', 'exists:spps,id'],
         ]);
 
         if($validator->fails()) {
@@ -101,15 +101,14 @@ class DataSiswaController extends Controller
         $siswa = User::findOrFail($id);
         $siswa->nisn = $request->nisn;
         $siswa->nis = $request->nis;
+        $siswa->username = $request->username;
         $siswa->nama = $request->nama;
         if (!empty($request->password)) {
             $siswa->password = bcrypt($request->password);
         }
-        $siswa->kelas_id = $request->kelas_id;
-        $siswa->spps_id = $request->spps_id;
         $siswa->save();
 
-        return redirect('admin.data-siswa')->with('success', 'Data siswa berhasil diupdate');
+        return redirect('data-siswa')->with('success', 'Data siswa berhasil diupdate');
     }
 
     /**

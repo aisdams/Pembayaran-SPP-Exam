@@ -67,9 +67,15 @@
                     <nav>
                         <ul class="metismenu" id="menu">
                             <li><a href="/dashboard"><i class="ti-dashboard"></i><span>Dashboard</span></a></li>
+                            @if (auth()->user()->level == "admin")
                             <li><a href="/data-siswa"><i class="ti-dashboard"></i><span>Data Siswa</span></a></li>
+                            @endif
+                            @if (auth()->user()->level == "admin")
                             <li><a href="/data-petugas"><i class="ti-dashboard"></i><span>Data Petugas</span></a></li>
+                            @endif
+                            @if (auth()->user()->level == "admin")
                             <li><a href="/data-kelas"><i class="ti-dashboard"></i><span>Data Kelas</span></a></li>
+                            @endif
                             <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>SPP</span></a>
                                 <ul class="collapse">
